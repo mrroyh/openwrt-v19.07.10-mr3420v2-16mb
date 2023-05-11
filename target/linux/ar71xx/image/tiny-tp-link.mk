@@ -680,7 +680,7 @@ endef
 TARGET_DEVICES += tl-wr941nd-v5
 
 define Device/tl-wr941nd-v6
-  $(Device/tplink-4mlzma)
+  $(Device/tplink-16mlzma)
   DEVICE_TITLE := TP-LINK TL-WR941N/ND v6
   BOARDNAME := TL-WR941ND-v6
   DEVICE_PROFILE := TLWR941
@@ -690,7 +690,7 @@ TARGET_DEVICES += tl-wr941nd-v6
 
 # Chinese version (unlike European) is similar to the TL-WDR3500
 define Device/tl-wr941nd-v6-cn
-  $(Device/tplink-4mlzma)
+  $(Device/tplink-16mlzma)
   DEVICE_TITLE := TP-LINK TL-WR941N/ND v6 (CN)
   BOARDNAME := TL-WDR3500
   DEVICE_PROFILE := TLWR941
