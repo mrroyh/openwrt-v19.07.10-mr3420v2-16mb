@@ -39,8 +39,9 @@
 #define WDR3500_GPIO_LED_LAN3		21
 #define WDR3500_GPIO_LED_LAN4		22
 
-#define WDR3500_GPIO_BTN_WPS		16
-#define WDR3500_GPIO_BTN_RFKILL		17
+//#define WDR3500_GPIO_BTN_WPS		16
+//#define WDR3500_GPIO_BTN_RFKILL		17
+#define WDR3500_GPIO_BTN_RESET		17
 
 #define WDR3500_GPIO_USB_POWER		12
 
@@ -85,7 +86,7 @@ static struct gpio_led wdr3500_leds_gpio[] __initdata = {
 };
 
 static struct gpio_keys_button wdr3500_gpio_keys[] __initdata = {
-	{
+/*	{
 		.desc		= "QSS button",
 		.type		= EV_KEY,
 		.code		= KEY_WPS_BUTTON,
@@ -99,6 +100,14 @@ static struct gpio_keys_button wdr3500_gpio_keys[] __initdata = {
 		.code		= KEY_RFKILL,
 		.debounce_interval = WDR3500_KEYS_DEBOUNCE_INTERVAL,
 		.gpio		= WDR3500_GPIO_BTN_RFKILL,
+	},*/
+	{
+		.desc		= "RESET switch",
+		.type		= EV_SW,
+		.code		= KEY_RESTART,
+		.debounce_interval = WDR3500_KEYS_DEBOUNCE_INTERVAL,
+		.gpio		= WDR3500_GPIO_BTN_RESET,
+		.active_low	= 1,
 	},
 };
 
@@ -134,32 +143,32 @@ static void __init wdr3500_setup(void)
 	ath79_eth1_data.phy_if_mode = PHY_INTERFACE_MODE_GMII;
 
 	ath79_register_eth(1);
-
+//	Disable GMAC0 so the wan port connected to switch
 	/* WAN */
-	ath79_init_mac(ath79_eth0_data.mac_addr, mac, 2);
+//	ath79_init_mac(ath79_eth0_data.mac_addr, mac, 2);
 
 	/* GMAC0 is connected to the PHY4 of the internal switch */
-	ath79_switch_data.phy4_mii_en = 1;
-	ath79_switch_data.phy_poll_mask = BIT(4);
-	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_MII;
-	ath79_eth0_data.phy_mask = BIT(4);
-	ath79_eth0_data.mii_bus_dev = &ath79_mdio1_device.dev;
+//	ath79_switch_data.phy4_mii_en = 1;
+//	ath79_switch_data.phy_poll_mask = BIT(4);
+//	ath79_eth0_data.phy_if_mode = PHY_INTERFACE_MODE_MII;
+//	ath79_eth0_data.phy_mask = BIT(4);
+//	ath79_eth0_data.mii_bus_dev = &ath79_mdio1_device.dev;
 
-	ath79_register_eth(0);
+//	ath79_register_eth(0);
 
 	gpio_request_one(WDR3500_GPIO_USB_POWER,
 			 GPIOF_OUT_INIT_HIGH | GPIOF_EXPORT_DIR_FIXED,
 			 "USB power");
 	ath79_register_usb();
 
-	ath79_gpio_output_select(WDR3500_GPIO_LED_LAN1,
-				 AR934X_GPIO_OUT_LED_LINK3);
-	ath79_gpio_output_select(WDR3500_GPIO_LED_LAN2,
-				 AR934X_GPIO_OUT_LED_LINK2);
+//	ath79_gpio_output_select(WDR3500_GPIO_LED_LAN1,
+//				 AR934X_GPIO_OUT_LED_LINK3);
+//	ath79_gpio_output_select(WDR3500_GPIO_LED_LAN2,
+//				 AR934X_GPIO_OUT_LED_LINK2);
 	ath79_gpio_output_select(WDR3500_GPIO_LED_LAN3,
-				 AR934X_GPIO_OUT_LED_LINK1);
+				 AR934X_GPIO_OUT_GPIO);
 	ath79_gpio_output_select(WDR3500_GPIO_LED_LAN4,
-				 AR934X_GPIO_OUT_LED_LINK0);
+				 AR934X_GPIO_OUT_GPIO);
 	ath79_gpio_output_select(WDR3500_GPIO_LED_WAN,
 				 AR934X_GPIO_OUT_LED_LINK4);
 }
