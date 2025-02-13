@@ -127,8 +127,8 @@
 &wmac {
 	status = "okay";
 
-	nvmem-cells = <&macaddr_art_1002 0>, <&cal_art_1000>;
-	nvmem-cell-names = "mac-address", "calibration";
+	nvmem-cells = <&cal_art_1000>;
+	nvmem-cell-names = "calibration";
 };
 
 &gpio {
@@ -167,9 +167,8 @@
 &eth1 {
 	status = "okay";
 
-	nvmem-cells = <&macaddr_art_1002 0>;
+	nvmem-cells = <&macaddr_art_1002 (-1)>;
 	nvmem-cell-names = "mac-address";
-	mac-address-increment = <(-1)>;
 
 	gmac-config {
 		device = <&gmac>;
